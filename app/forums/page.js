@@ -1,12 +1,14 @@
 import React from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 const topics = [
-  { text: 'Next.js', img: '', desc: 'Stuff related to Next.js' },
-  { text: 'Firebase', img: '', desc: 'Realtime DB, Auth, Hosting and Functions' },
-  { text: 'Supabase', img: '', desc: 'Postgres-based backend, auth and realtime' },
-  { text: 'Clerk', img: '', desc: 'Authentication and user management for apps' },
+  { text: 'Next.js', img: 'https://cdn.worldvectorlogo.com/logos/next-js.svg', desc: 'Stuff related to Next.js' },
+  { text: 'Firebase', img: 'https://firebase.google.com/static/images/brand-guidelines/logo-logomark.png', desc: 'Realtime DB, Auth, Hosting and Functions' },
+  { text: 'Supabase', img: 'https://gimgs2.nohat.cc/thumb/f/640/supabase-logo-vector--comseeklogo435677.jpg', desc: 'Postgres-based backend, auth and realtime' },
+  { text: 'Clerk', img: 'https://play-lh.googleusercontent.com/skTBZ-WGz0xycyIkcILYOB8xQ9yk7DMm9uKuVLJKFoFMMd1h-i8mHclFxiO9GVfVX_hL', desc: 'Authentication and user management for apps' },
   { text: 'Prisma', img: '', desc: 'Type-safe ORM for Node.js and TypeScript' },
   { text: 'Tailwind CSS', img: '', desc: 'Utility-first CSS framework and UI patterns' },
   { text: 'tRPC', img: '', desc: 'End-to-end typesafe APIs without extra schemas' },
@@ -15,7 +17,7 @@ const topics = [
 
 export default function Forums() {
   return (
-    <main className="pt-24 pb-12 px-4 bg-[var(--background)] text-[var(--foreground)]">
+    <main className="pt-24 pb-12 px-4 bg-black text-white">
       <div className="max-w-6xl mx-auto">
         {/* Banner image (external) */}
         <div className="mb-6 rounded-lg overflow-hidden">
@@ -30,16 +32,15 @@ export default function Forums() {
           <h1 className="text-4xl sm:text-5xl font-extrabold" style={{ fontFamily: 'var(--font-poppins)' }}>
             Discussion Forums
           </h1>
-          <p className="text-sm mt-2 text-[var(--muted-foreground)] max-w-2xl mx-auto">Browse topics and join conversations — each forum is a focused space for questions, resources and examples.</p>
+          <p className="text-sm mt-2 text-white/80 max-w-2xl mx-auto">Browse topics and join conversations — each forum is a focused space for questions, resources and examples.</p>
         </header>
 
         <section aria-label="Forum topics">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {topics.map((t) => (
-              <article key={t.text} className="group rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 hover:shadow-sm focus-within:ring-2 focus-within:ring-[var(--ring)]">
+              <Card key={t.text} className="group p-4 hover:shadow-sm focus-within:ring-2 focus-within:ring-white/20 bg-black text-white border border-white/10">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0">
-                    {/* show image if present, otherwise show initial with primary color */}
                     {t.img ? (
                       <img src={t.img} alt={`${t.text} icon`} className="w-12 h-12 rounded-md object-cover" />
                     ) : (
@@ -52,13 +53,13 @@ export default function Forums() {
                     <p className="mt-1 text-sm text-[var(--muted-foreground)]">{t.desc}</p>
 
                     <div className="mt-3 flex items-center justify-end">
-                      <Link href={`/forums/${encodeURIComponent(t.text.toLowerCase())}`} className="inline-flex items-center gap-2 text-sm text-[var(--primary)] hover:underline">
-                        View
+                      <Link href={`/forums/${encodeURIComponent(t.text.toLowerCase())}`}>
+                        <Button variant="outline" size="sm" className="text-white border border-white/20">View</Button>
                       </Link>
                     </div>
                   </div>
                 </div>
-              </article>
+              </Card>
             ))}
           </div>
         </section>
