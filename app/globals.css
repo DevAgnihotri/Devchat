@@ -1,33 +1,35 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  /* moved from @theme inline */
+  /* Force deep dark theme everywhere */
+  --background: #000000; /* pure black */
+  --foreground: #e6eef8; /* very light for contrast */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* shadcn-inspired tokens */
-  --surface: #ffffff;
-  --muted-foreground: #6b7280; /* gray-500 */
-  --border: #e5e7eb; /* gray-200 */
-  --ring: #c7d2fe; /* indigo-200 */
-  --primary: #6366f1; /* indigo-500 */
-  --input: #fafafa;
+  /* shadcn-inspired tokens adapted for pure black */
+  --surface: #0b0b0b; /* near-black surface */
+  --muted-foreground: #9aa6b2; /* muted text on black */
+  --border: #111316; /* subtle border on black */
+  --ring: #1f2937; /* subdued ring */
+  --primary: #0ea5a5; /* shadcn-ish teal/cyan primary (keeps palette limited to shadcn tone)
+  */
+  --input: #070707;
 }
 
+/* Keep same tokens for dark preference (we're using deep black by default) */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --surface: #0b1220;
-    --muted-foreground: #9ca3af;
-    --border: #1f2937;
-    --ring: #4f46e5;
-    --primary: #7c3aed;
-    --input: #071024;
+    --background: #000000;
+    --foreground: #e6eef8;
+    --surface: #0b0b0b;
+    --muted-foreground: #9aa6b2;
+    --border: #111316;
+    --ring: #1f2937;
+    --primary: #0ea5a5;
+    --input: #070707;
   }
 }
 

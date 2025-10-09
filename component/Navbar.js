@@ -9,7 +9,7 @@ import {
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-50 bg-[var(--surface)]/80 backdrop-blur-sm border-b border-[var(--border)]">
+  <header className="fixed inset-x-0 top-0 z-50 bg-[var(--surface)]/80 backdrop-blur-sm border-b border-[var(--border)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* left: brand */}
@@ -25,7 +25,7 @@ export default function Navbar() {
             <div className="w-full max-w-2xl flex items-center gap-3">
               <nav className="flex items-center gap-2">
                 <Link href="#" className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] px-2 py-1 rounded-md">Home</Link>
-                <Link href="#" className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] px-2 py-1 rounded-md">Explore</Link>
+                <Link href="#" className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] px-2 py-1 rounded-md">Forums</Link>
                 <Link href="#" className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] px-2 py-1 rounded-md">Docs</Link>
               </nav>
 
