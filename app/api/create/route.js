@@ -15,32 +15,30 @@ export async function POST(request) {
     // Create User Token
     const token = serverClient.createToken(user.data.id);
     console.log("A NEW USER HAS BEEN CREATED")
-    const client = clerkClient;
+    const client = await clerkClient();
     await serverClient.upsertUser({ id: user.data.id });
 
-    //Update Clerk user metadata; guard different API shapes and avoid crashing
+    //Update Clerk user metadata with the correct API
     try {
-      if (client?.users?.updateUserMetadata) {
-        await client.users.updateUserMetadata(user.data.id, { publicMetadata: { token } });
-      } else if (client?.users?.update) {
-        await client.users.update(user.data.id, { publicMetadata: { token } });
-      } else {
-        console.warn('Clerk users update API not available; skipping metadata update');
-      }
+      await client.users.updateUser(user.data.id, { 
+        publicMetadata: { token } 
+      });
+      console.log('Updated Clerk user metadata with token');
     } catch (err) {
       console.warn('Failed to update Clerk user metadata, continuing', err);
     }
 
 
     //Give access to user for all chats
-    const slugs = ['next.js-home', 'firebase-home', 'supabase-home', 'clerk-home', 'prisma-home', 'tailwind-home', 'trpc-home', 'mongodb-home']
+    const slugs = ['nextjs-home', 'firebase-home', 'supabase-home', 'clerk-home', 'prisma-home', 'tailwind-home', 'trpc-home', 'mongodb-home']
     slugs.forEach(async (item) => {
       try {
         // use the Stream server client (serverClient) to create channels
         const channel = serverClient.channel('messaging', item, {
           image: 'https://getstream.io/random_png/?name=react',
-          name: item.toUpperCase() + " Discussion",
+          name: item.replace(/-/g, ' ').toUpperCase() + " Discussion",
           members: [user.data.id],
+          created_by_id: user.data.id, // Required for server-side auth
         });
         await channel.create();
         await channel.addMembers([user.data.id]);

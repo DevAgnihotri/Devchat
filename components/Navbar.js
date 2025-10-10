@@ -38,8 +38,8 @@ export default function Navbar() {
           <div className="flex-1 hidden md:flex items-center justify-center px-4">
             <div className="w-full max-w-2xl flex items-center gap-3">
               <nav className="flex items-center gap-2">
-                <Link href="#" className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] px-2 py-1 rounded-md">Home</Link>
-                <Link href="#" className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] px-2 py-1 rounded-md">Explore</Link>
+                <Link href="/" className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] px-2 py-1 rounded-md">Home</Link>
+                <Link href="/forums" className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] px-2 py-1 rounded-md">Forums</Link>
                 <Link href="#" className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] px-2 py-1 rounded-md">Docs</Link>
               </nav>
 

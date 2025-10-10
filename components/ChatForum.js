@@ -83,16 +83,18 @@ function InnerChatForum({ apiKey, userId, userName, userToken, slug }) {
   if (!client) return <div>Setting up client & connection...</div>;
 
   return (
-    <Chat client={client}>
-      <Channel channel={channel}>
-        <Window>
-          <ChannelHeader />
-          <MessageList />
-          <MessageInput />
-        </Window>
-        <Thread />
-      </Channel>
-    </Chat>
+    <div className="h-full w-full">
+      <Chat client={client}>
+        <Channel channel={channel}>
+          <Window>
+            <ChannelHeader />
+            <MessageList />
+            <MessageInput />
+          </Window>
+          <Thread />
+        </Channel>
+      </Chat>
+    </div>
   );
 }
 

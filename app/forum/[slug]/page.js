@@ -18,7 +18,7 @@ export default async function Page({ params }) {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="h-screen w-full pt-16">
       <ChatForum slug={slug} clerkUser={{ id: user.id, name: user.firstName, token: user.publicMetadata?.token }} />
     </div>
   );
