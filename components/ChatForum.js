@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { useCreateChatClient, Chat, Channel, ChannelHeader, MessageInput, MessageList, Thread, Window } from 'stream-chat-react';
 import 'stream-chat-react/dist/css/v2/index.css';
 import { useUser } from "@clerk/nextjs";
+import { Spinner } from "@/components/ui/spinner";
 
 
 /*
@@ -80,7 +81,14 @@ function InnerChatForum({ apiKey, userId, userName, userToken, slug }) {
     setChannel(channel);
   }, [client, slug, userToken, userId]);
 
-  if (!client) return <div>Setting up client & connection...</div>;
+  if (!client) return (
+    <div className="flex items-center justify-center h-full">
+      <div className="flex flex-col items-center gap-3">
+        <Spinner size="lg" className="text-indigo-500" />
+        <p className="text-white/70">Setting up client & connection...</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="h-full w-full">
@@ -151,14 +159,37 @@ export default function ChatForum({ slug }) {
   }, [mounted, isLoaded, isSignedIn, user, userToken, tokenRequested]);
 
   // Prevent hydration mismatch by not rendering auth-dependent content until mounted
-  if (!mounted) return <div>Loading chat...</div>;
-  if (!isLoaded) return <div>Loading user...</div>;
-  if (!isSignedIn || !user) return <div>Please sign in to use chat.</div>;
+  if (!mounted) return (
+    <div className="flex items-center justify-center h-full">
+      <div className="flex flex-col items-center gap-3">
+        <Spinner className="text-indigo-500" />
+        <p className="text-white/70">Loading chat...</p>
+      </div>
+    </div>
+  );
+  
+  if (!isLoaded) return (
+    <div className="flex items-center justify-center h-full">
+      <div className="flex flex-col items-center gap-3">
+        <Spinner className="text-indigo-500" />
+        <p className="text-white/70">Loading user...</p>
+      </div>
+    </div>
+  );
+  
+  if (!isSignedIn || !user) return <div className="min-h-screen flex items-center justify-center">Please sign in to use chat.</div>;
 
   const userId = user.id;
   const userName = user.firstName || user.fullName || 'User';
 
-  if (!userToken) return <div>Waiting for chat token... (minting if needed)</div>;
+  if (!userToken) return (
+    <div className="flex items-center justify-center h-full">
+      <div className="flex flex-col items-center gap-3">
+        <Spinner className="text-indigo-500" />
+        <p className="text-white/70">Waiting for chat token... (minting if needed)</p>
+      </div>
+    </div>
+  );
 
   return <InnerChatForum apiKey={apiKey} userId={userId} userName={userName} userToken={userToken} slug={slug} />;
 }
