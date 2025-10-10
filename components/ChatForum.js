@@ -5,7 +5,7 @@ import { useCreateChatClient, Chat, Channel, ChannelHeader, MessageInput, Messag
 
 import 'stream-chat-react/dist/css/v2/index.css';
 
-const apiKey = 'dz5f4d5kzrue';
+const apiKey = '9r99ech5b2pn';
 const userId = 'user_33q3v6UwIdMozuMvXbUNKvTBDhQ';
 const userName = 'Dev';
 const userToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidXNlcl8zM3EzdjZVd0lkTW96dU12WGJVTkt2VEJEaFEifQ.zaY0_IewEWVy1WG8R_4DlX_lKlT2BoeovRJZEiF6e8U';
@@ -16,8 +16,8 @@ const user = {
   image: `https://getstream.io/random_png/?name=${userName}`,
 };
 
-export default function ChatForum(slug) {
-const [channel, setChannel] = useState("");
+export default function ChatForum({ slug }) {
+  const [channel, setChannel] = useState("");
   const client = useCreateChatClient({
     apiKey,
     tokenOrProvider: userToken,
@@ -29,12 +29,12 @@ const [channel, setChannel] = useState("");
 
     const channel = client.channel('messaging', slug, {
       image: 'https://getstream.io/random_png/?name=react',
-      name: slug + "Discussion",
+      name: slug + " Discussion",
       members: [userId],
     });
 
     setChannel(channel);
-  }, [client]);
+  }, [client, slug]);
 
   if (!client) return <div>Setting up client & connection...</div>;
 
