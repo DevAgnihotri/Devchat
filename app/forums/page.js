@@ -5,14 +5,14 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 const topics = [
-  { text: 'Next.js', img: 'https://cdn.worldvectorlogo.com/logos/next-js.svg', desc: 'Stuff related to Next.js' },
-  { text: 'Firebase', img: 'https://firebase.google.com/static/images/brand-guidelines/logo-logomark.png', desc: 'Realtime DB, Auth, Hosting and Functions' },
-  { text: 'Supabase', img: 'https://gimgs2.nohat.cc/thumb/f/640/supabase-logo-vector--comseeklogo435677.jpg', desc: 'Postgres-based backend, auth and realtime' },
-  { text: 'Clerk', img: 'https://play-lh.googleusercontent.com/skTBZ-WGz0xycyIkcILYOB8xQ9yk7DMm9uKuVLJKFoFMMd1h-i8mHclFxiO9GVfVX_hL', desc: 'Authentication and user management for apps' },
-  { text: 'Prisma', img: '', desc: 'Type-safe ORM for Node.js and TypeScript' },
-  { text: 'Tailwind CSS', img: '', desc: 'Utility-first CSS framework and UI patterns' },
-  { text: 'tRPC', img: '', desc: 'End-to-end typesafe APIs without extra schemas' },
-  { text: 'MongoDB', img: '', desc: 'NoSQL document database with flexible schema and scalability' },
+  { text: 'Next.js', slug: 'next.js', img: 'https://cdn.worldvectorlogo.com/logos/next-js.svg', desc: 'Stuff related to Next.js' },
+  { text: 'Firebase', slug: 'firebase', img: 'https://firebase.google.com/static/images/brand-guidelines/logo-logomark.png', desc: 'Realtime DB, Auth, Hosting and Functions' },
+  { text: 'Supabase', slug: 'supabase', img: 'https://gimgs2.nohat.cc/thumb/f/640/supabase-logo-vector--comseeklogo435677.jpg', desc: 'Postgres-based backend, auth and realtime' },
+  { text: 'Clerk', slug: 'clerk', img: 'https://play-lh.googleusercontent.com/skTBZ-WGz0xycyIkcILYOB8xQ9yk7DMm9uKuVLJKFoFMMd1h-i8mHclFxiO9GVfVX_hL', desc: 'Authentication and user management for apps' },
+  { text: 'Prisma', slug: 'prisma', img: '', desc: 'Type-safe ORM for Node.js and TypeScript' },
+  { text: 'Tailwind', slug: 'tailwind', img: '', desc: 'Utility-first CSS framework and UI patterns' },
+  { text: 'tRPC', slug: 'trpc', img: '', desc: 'End-to-end typesafe APIs without extra schemas' },
+  { text: 'MongoDB', slug: 'mongodb', img: '', desc: 'NoSQL document database with flexible schema and scalability' },
 ];
 
 export default function Forums() {
@@ -53,7 +53,7 @@ export default function Forums() {
                     <p className="mt-1 text-sm text-[var(--muted-foreground)]">{t.desc}</p>
 
                     <div className="mt-3 flex items-center justify-end">
-                      <Link href={`/forums/${encodeURIComponent(t.text.toLowerCase())}`}>
+                      <Link href={`/forum/${t.slug}`}>
                         <Button variant="outline" size="sm" className="text-white border border-white/20">View</Button>
                       </Link>
                     </div>
