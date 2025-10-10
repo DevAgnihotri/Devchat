@@ -2,6 +2,7 @@
 //https://getstream.io/chat/docs/react/tokens_and_authentication/
 
 import { StreamChat } from "stream-chat";
+import { clerkClient } from "@clerk/nextjs/server";
 
 const api_key = "9r99ech5b2pn";
 const api_secret = "fhvvdxqxgnqzj9m77w8kju5mk24zqnrmxubr9d3kcdka4bdtagmsfxteqqq28tp8";
@@ -10,17 +11,43 @@ const api_secret = "fhvvdxqxgnqzj9m77w8kju5mk24zqnrmxubr9d3kcdka4bdtagmsfxteqqq2
 export async function POST(request) {
     // Initialize a Server Client
     const serverClient = StreamChat.getInstance(api_key, api_secret);
+    const user = await request.json()
     // Create User Token
-    // const token = serverClient.createToken(user_id);
-    // console.log(token)
+    const token = serverClient.createToken(user.data.id);
+    console.log("A NEW USER HAS BEEN CREATED")
+    const client = clerkClient;
+    await serverClient.upsertUser({ id: user.data.id });
 
-    let body = {};
+    //Update Clerk user metadata; guard different API shapes and avoid crashing
     try {
-      body = await request.json();
-    } catch (_) {
-      // no/invalid JSON body; ignore to avoid 500/502
+      if (client?.users?.updateUserMetadata) {
+        await client.users.updateUserMetadata(user.data.id, { publicMetadata: { token } });
+      } else if (client?.users?.update) {
+        await client.users.update(user.data.id, { publicMetadata: { token } });
+      } else {
+        console.warn('Clerk users update API not available; skipping metadata update');
+      }
+    } catch (err) {
+      console.warn('Failed to update Clerk user metadata, continuing', err);
     }
-    console.log(body);
-    return Response.json({ message: 'Hello World' })
-}
 
+
+    //Give access to user for all chats
+    const slugs = ['next.js-home', 'firebase-home', 'supabase-home', 'clerk-home', 'prisma-home', 'tailwind-home', 'trpc-home', 'mongodb-home']
+    slugs.forEach(async (item) => {
+      try {
+        // use the Stream server client (serverClient) to create channels
+        const channel = serverClient.channel('messaging', item, {
+          image: 'https://getstream.io/random_png/?name=react',
+          name: item.toUpperCase() + " Discussion",
+          members: [user.data.id],
+        });
+        await channel.create();
+        await channel.addMembers([user.data.id]);
+      } catch (err) {
+        console.warn('Failed to create/add members to channel', item, err);
+      }
+    });
+
+    return Response.json({ message: 'Hello World', token })
+    }

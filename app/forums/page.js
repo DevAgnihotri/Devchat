@@ -5,14 +5,14 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 const topics = [
-  { text: 'Next.js', slug: 'next.js', img: 'https://cdn.worldvectorlogo.com/logos/next-js.svg', desc: 'Stuff related to Next.js' },
-  { text: 'Firebase', slug: 'firebase', img: 'https://firebase.google.com/static/images/brand-guidelines/logo-logomark.png', desc: 'Realtime DB, Auth, Hosting and Functions' },
-  { text: 'Supabase', slug: 'supabase', img: 'https://gimgs2.nohat.cc/thumb/f/640/supabase-logo-vector--comseeklogo435677.jpg', desc: 'Postgres-based backend, auth and realtime' },
-  { text: 'Clerk', slug: 'clerk', img: 'https://play-lh.googleusercontent.com/skTBZ-WGz0xycyIkcILYOB8xQ9yk7DMm9uKuVLJKFoFMMd1h-i8mHclFxiO9GVfVX_hL', desc: 'Authentication and user management for apps' },
-  { text: 'Prisma', slug: 'prisma', img: '', desc: 'Type-safe ORM for Node.js and TypeScript' },
-  { text: 'Tailwind', slug: 'tailwind', img: '', desc: 'Utility-first CSS framework and UI patterns' },
-  { text: 'tRPC', slug: 'trpc', img: '', desc: 'End-to-end typesafe APIs without extra schemas' },
-  { text: 'MongoDB', slug: 'mongodb', img: '', desc: 'NoSQL document database with flexible schema and scalability' },
+  { text: 'Next.js', slug: 'next.js-home', img: 'https://cdn.worldvectorlogo.com/logos/next-js.svg', desc: 'Stuff related to Next.js' },
+  { text: 'Firebase', slug: 'firebase-home', img: 'https://firebase.google.com/static/images/brand-guidelines/logo-logomark.png', desc: 'Realtime DB, Auth, Hosting and Functions' },
+  { text: 'Supabase', slug: 'supabase-home', img: 'https://gimgs2.nohat.cc/thumb/f/640/supabase-logo-vector--comseeklogo435677.jpg', desc: 'Postgres-based backend, auth and realtime' },
+  { text: 'Clerk', slug: 'clerk-home', img: 'https://play-lh.googleusercontent.com/skTBZ-WGz0xycyIkcILYOB8xQ9yk7DMm9uKuVLJKFoFMMd1h-i8mHclFxiO9GVfVX_hL', desc: 'Authentication and user management for apps' },
+  { text: 'Prisma', slug: 'prisma-home', img: '', desc: 'Type-safe ORM for Node.js and TypeScript' },
+  { text: 'Tailwind', slug: 'tailwind-home', img: '', desc: 'Utility-first CSS framework and UI patterns' },
+  { text: 'tRPC', slug: 'trpc-home', img: '', desc: 'End-to-end typesafe APIs without extra schemas' },
+  { text: 'MongoDB', slug: 'mongodb-home', img: '', desc: 'NoSQL document database with flexible schema and scalability' },
 ];
 
 export default function Forums() {

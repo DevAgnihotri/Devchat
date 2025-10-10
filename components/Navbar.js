@@ -1,5 +1,5 @@
 "use client"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   SignedIn,
@@ -8,13 +8,18 @@ import {
   SignUpButton,
   UserButton,
 } from "@clerk/nextjs";
-import { useUser } from "@clerk/nextjs";
+// import { useUser } from "@clerk/nextjs";
 
 
 export default function Navbar() {
+  const [mounted, setMounted] = useState(false);
 
-  const { user } = useUser()
-  console.log(user?.id) //user?.id
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // const { user } = useUser()
+  // console.log(user?.id) //user?.id
   // Log only after mount / when values change so it appears in the browser consol
 
   return (
@@ -63,20 +68,24 @@ export default function Navbar() {
               New chat
             </button>
 
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
+            {mounted && (
+              <>
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
 
-            <SignedOut>
-              <div className="flex items-center gap-2">
-                <SignInButton mode="modal">
-                  <button className="px-3 py-2 rounded-md text-sm border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)]">Sign in</button>
-                </SignInButton>
-                <SignUpButton mode="modal">
-                  <button className="px-3 py-2 rounded-md text-sm bg-[var(--primary)] text-white">Sign up</button>
-                </SignUpButton>
-              </div>
-            </SignedOut>
+                <SignedOut>
+                  <div className="flex items-center gap-2">
+                    <SignInButton mode="modal">
+                      <button className="px-3 py-2 rounded-md text-sm border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)]">Sign in</button>
+                    </SignInButton>
+                    <SignUpButton mode="modal">
+                      <button className="px-3 py-2 rounded-md text-sm bg-[var(--primary)] text-white">Sign up</button>
+                    </SignUpButton>
+                  </div>
+                </SignedOut>
+              </>
+            )}
           </div>
         </div>
       </div>
