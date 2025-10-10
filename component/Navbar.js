@@ -1,3 +1,5 @@
+"use client"
+import { useEffect } from "react";
 import Link from "next/link";
 import {
   SignedIn,
@@ -6,8 +8,15 @@ import {
   SignUpButton,
   UserButton,
 } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
+
 
 export default function Navbar() {
+
+  const { user } = useUser()
+  console.log(user?.id) //user?.id
+  // Log only after mount / when values change so it appears in the browser consol
+
   return (
     <header className="sticky top-0 z-50 bg-[var(--surface)]/80 backdrop-blur-sm border-b border-[var(--border)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
