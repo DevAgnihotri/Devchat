@@ -17,13 +17,13 @@ Real-time developer forum platform with instant messaging
 
 <div align="center">
 
-<img src="./Screenshots/1.png" alt="Home Page" width="800"/>
+<img src="./Screenshots/1.png" alt="Home Page"/>
 
-<img src="./Screenshots/2.png" alt="Forums Listing" width="800"/>
+<img src="./Screenshots/2.png" alt="Forums Listing"/>
 
-<img src="./Screenshots/3.png" alt="Chat Interface" width="800"/>
+<img src="./Screenshots/3.png" alt="Chat Interface"/>
 
-<img src="./Screenshots/4.png" alt="Real-time Messaging" width="800"/>
+<img src="./Screenshots/4.png" alt="Real-time Messaging"/>
 
 </div>
 
