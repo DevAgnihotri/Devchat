@@ -1,116 +1,217 @@
-# DevChat — Real-time Forum App (Technical README)
+<div align="center">
 
-A compact technical overview for DevChat — a Next.js App Router application using Tailwind CSS, Clerk for auth, and Stream Chat for real-time conversations. This README explains the architecture, environment variables, key files, and how to reproduce the project.
+# DevChat
 
-Screenshots (included in repo):
+Real-time developer forum platform with instant messaging
 
-- ./public/file.svg
-- ./public/globe.svg
-- ./public/next.svg
-- ./public/vercel.svg
+[![Next.js](https://img.shields.io/badge/Next.js-15.5-black?logo=next.js)](https://nextjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
+[![Stream Chat](https://img.shields.io/badge/Stream-Chat-005FFF?logo=stream)](https://getstream.io/chat/)
+[![Clerk](https://img.shields.io/badge/Clerk-Auth-6C47FF?logo=clerk)](https://clerk.com/)
 
-## Overview
+</div>
 
-- Framework: Next.js (App Router)
-- UI: Tailwind CSS, Poppins (local font), shadcn-style components
-- Auth: Clerk (client + server helpers)
-- Realtime Chat: Stream Chat (server signs tokens; client uses token)
-- Hosting: Vercel (recommended)
+---
 
-## Key files
+## Screenshots
 
-- `app/layout.js` — root layout, wraps app in `ClerkProvider` and injects frontend API from env.
-- `components/ChatForum.js` — client chat UI using `stream-chat-react`; requests server-signed tokens from `/api/create`.
-- `app/api/create/route.js` — server route that uses Stream server SDK to create tokens, upsert users, and create channels; must use server-only secrets.
-- `components/Navbar.js` — top navigation and client auth UI (hydration-safe rendering).
-- `app/forums/page.js` and `app/forum/[slug]/page.js` — forums listing and dynamic forum pages.
+<div align="center">
 
-## Environment variables (required)
+<img src="./Screenshots/1.png" alt="Home Page" width="800"/>
 
-- `STREAM_API_KEY` — Stream API key (server)
-- `STREAM_API_SECRET` — Stream API secret (server-only)
-- `NEXT_PUBLIC_STREAM_API_KEY` — optional public Stream key for client
-- `CLERK_FRONTEND_API` or `NEXT_PUBLIC_CLERK_FRONTEND_API` — Clerk project frontend API (public)
-- `CLERK_PUBLISHABLE_KEY` — Clerk publishable key (client)
-- `CLERK_SECRET_KEY` — Clerk secret key (server-only)
+<img src="./Screenshots/2.png" alt="Forums Listing" width="800"/>
 
-## Security notes
+<img src="./Screenshots/3.png" alt="Chat Interface" width="800"/>
 
-- Never commit `STREAM_API_SECRET` or `CLERK_SECRET_KEY` into source or repo history. If exposed, rotate immediately.
-- Use Vercel Project → Settings → Environment Variables to store production secrets (Preview + Production scopes).
+<img src="./Screenshots/4.png" alt="Real-time Messaging" width="800"/>
 
-## Local setup (developer)
+</div>
 
-1. Copy `.env.example` to `.env.local` and fill values.
-2. Install dependencies: `npm install`.
-3. Run dev server: `npm run dev`.
-4. Sign in with Clerk and open `/forums` to test chat flow.
+---
 
-## Seven-step reproduction process (single-line each)
+## Tech Stack
 
-1. Clone the repo and cd into it.
-2. Copy `.env.example` to `.env.local` and supply keys for Clerk and Stream.
-3. Run `npm install` to install dependencies.
-4. Start the dev server with `npm run dev`.
-5. Sign in via Clerk on the site to create a user session.
-6. Visit a forum page to trigger `/api/create` and mint a Stream token.
-7. Confirm chat connects and messages appear in real time.
+**Frontend**
+
+- Next.js 15.5 (App Router)
+- React 19
+- Tailwind CSS v4
+- stream-chat-react
+- shadcn-inspired UI components
+
+**Backend & Services**
+
+- Next.js API Routes
+- Stream Chat SDK (server-side token generation)
+- Clerk Authentication
+
+**Deployment**
+
+- Vercel (recommended)
+
+---
+
+## Features
+
+- Server-signed Stream Chat tokens (secure, no client-side secrets)
+- Real-time messaging with Stream Chat React components
+- Clerk-powered authentication with social logins
+- Dynamic forum routes for topic-based discussions
+- Responsive shadcn-style UI with Tailwind CSS
+- Server-side user token minting and channel creation
+
+---
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+- Clerk account (free tier available)
+- Stream Chat account (free tier available)
+
+### Setup in 7 Steps
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/DevAgnihotri/Devchat.git && cd Devchat
+
+# 2. Copy environment template and add your keys
+cp .env.example .env.local
+
+# 3. Install dependencies
+npm install
+
+# 4. Start the development server
+npm run dev
+
+# 5. Open browser to http://localhost:3000
+
+# 6. Sign in with Clerk (creates user session)
+
+# 7. Visit /forums and click any forum to test real-time chat
+```
+
+---
+
+## Environment Variables
+
+Create `.env.local` in the project root and add:
+
+```env
+# Stream Chat
+STREAM_API_KEY=your_stream_api_key
+STREAM_API_SECRET=your_stream_secret
+NEXT_PUBLIC_STREAM_API_KEY=your_stream_public_key
+
+# Clerk Authentication
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+NEXT_PUBLIC_CLERK_FRONTEND_API=your_clerk_frontend_api
+CLERK_SECRET_KEY=your_clerk_secret_key
+```
+
+**Security**: Never commit secrets. Use Vercel environment variables for production.
+
+---
+
+## Project Structure
+
+```
+devchat/
+├── app/
+│   ├── api/create/        # Server route for token generation
+│   ├── forum/[slug]/      # Dynamic forum pages
+│   ├── forums/            # Forums listing
+│   ├── docs/              # Documentation page
+│   └── layout.js          # Root layout with ClerkProvider
+├── components/
+│   ├── ChatForum.js       # Stream Chat UI wrapper
+│   ├── Navbar.js          # Navigation with auth UI
+│   └── ui/                # shadcn-style components
+└── public/
+    └── Screenshots/       # App screenshots
+```
+
+---
+
+## Architecture
+
+**Authentication Flow**
+
+1. User signs in via Clerk
+2. Client requests token from `/api/create`
+3. Server mints Stream token using `STREAM_API_SECRET`
+4. Server upserts user to Stream and creates channels
+5. Token returned to client and stored in Clerk metadata
+
+**Chat Flow**
+
+1. `ChatForum` component checks for user token
+2. If missing, auto-requests from `/api/create`
+3. Initializes Stream client with token
+4. Connects to channel and renders real-time UI
+
+---
 
 ## Commands
 
-- Dev: `npm run dev` (Next dev server)
-- Build: `npm run build`
-- Start: `npm start`
+```bash
+npm run dev      # Start development server (Turbopack)
+npm run build    # Production build
+npm start        # Start production server
+```
 
-## Architecture notes
+---
 
-- Token flow: client requests a token by POSTing to `/api/create` (server uses `STREAM_API_SECRET` to mint token and upsert Stream users); client stores token in Clerk public metadata or uses response to initialize Stream client.
-- Auth: Clerk handles sign-in and session on client; server uses `@clerk/nextjs/server` helpers to update metadata and perform server-side auth secure ops.
+## Deployment
+
+### Deploy to Vercel
+
+1. Push code to GitHub
+2. Import project in Vercel dashboard
+3. Add environment variables (see above)
+4. Deploy
+
+**CLI (alternative)**
+
+```bash
+vercel --prod
+```
+
+See [VERCEL_DEPLOY.md](./VERCEL_DEPLOY.md) for detailed deployment instructions.
+
+---
 
 ## Troubleshooting
 
-- If `/api/create` returns 500, verify `STREAM_API_KEY` and `STREAM_API_SECRET` are present in the environment.
-- If chat fails to connect client-side, check console for `token` missing errors and confirm Clerk public metadata contains the token or the API returned one.
+**Issue**: `/api/create` returns 500  
+**Fix**: Verify `STREAM_API_KEY` and `STREAM_API_SECRET` are set in environment
 
-## Notes for deployment
+**Issue**: Chat fails to connect  
+**Fix**: Check browser console for token errors; confirm `/api/create` response includes token
 
-- Add env variables to Vercel (Preview + Production), remove secrets from Git history where possible, and ensure the app is deployed with the environment variables set.
+**Issue**: Clerk auth errors in production  
+**Fix**: Ensure `NEXT_PUBLIC_CLERK_FRONTEND_API` is set in Vercel environment variables
 
-If you want, I can open a PR with this README and update any screenshot references or wording further.
+---
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Contributing
 
-## Getting Started
+Contributions welcome. Open an issue or PR.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## License
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+MIT
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+<div align="center">
 
-## Learn More
+Built with Next.js, Stream Chat, and Clerk
 
-To learn more about Next.js, take a look at the following resources:
+[Report Bug](https://github.com/DevAgnihotri/Devchat/issues) · [Request Feature](https://github.com/DevAgnihotri/Devchat/issues)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+</div>
