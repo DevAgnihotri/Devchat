@@ -16,7 +16,7 @@ import { Spinner } from "@/components/ui/spinner";
 
 const ChatForum = ({clerkUser, slug}) => {
   // your Stream app information
-  const apiKey = '9r99ech5b2pn';
+  const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY || '';
   const userId = clerkUser?.id;
   const userName = clerkUser?.name || 'User';
   const userToken = clerkUser?.token;
@@ -112,7 +112,7 @@ export default function ChatForum({ slug }) {
   const [mounted, setMounted] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [tokenRequested, setTokenRequested] = useState(false);
-  const apiKey = '9r99ech5b2pn';
+  const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY || '';
 
   useEffect(() => {
     setMounted(true);

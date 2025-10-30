@@ -4,8 +4,9 @@
 import { StreamChat } from "stream-chat";
 import { clerkClient } from "@clerk/nextjs/server";
 
-const api_key = "9r99ech5b2pn";
-const api_secret = "fhvvdxqxgnqzj9m77w8kju5mk24zqnrmxubr9d3kcdka4bdtagmsfxteqqq28tp8";
+// Read Stream credentials from environment (move secrets to .env or Vercel env)
+const api_key = process.env.STREAM_API_KEY;
+const api_secret = process.env.STREAM_API_SECRET;
 // const user_id = "user_33q3v6UwIdMozuMvXbUNKvTBDhQ";
 
 export async function POST(request) {
