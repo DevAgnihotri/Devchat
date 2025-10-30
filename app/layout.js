@@ -32,16 +32,20 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  // Clerk expects a frontendApi value (project identifier). Prefer the
+  // NEXT_PUBLIC_ variant for client usage; fall back to CLERK_FRONTEND_API
+  const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_FRONTEND_API || process.env.CLERK_FRONTEND_API;
+
   return (
-     <ClerkProvider>
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}
-      >
-        <Navbar />
-        {children}
-      </body>
-    </html>
+    <ClerkProvider frontendApi={clerkFrontendApi}>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}
+        >
+          <Navbar />
+          {children}
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
